@@ -1,0 +1,44 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field%}
+    <ul class="sonata-ba-show-one-to-many nav nav-tabs">
+        {% for element in value %}
+            <li{% if loop.first %} class="active"{% endif %}><a href="#link-{{ loop.index }}" data-toggle="tab">{{ element.rel }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="tab-content">
+        {% for element in value %}
+            <div id="link-{{ loop.index }}" class="{% if loop.first %}active{% endif %} tab-pane">
+                {% set mime_type = element.type|split('/')[0] %}
+                {% if mime_type == 'image' %}
+                    <img src="{{ element.href }}" title="{{ element.title }}" />
+                {% elseif mime_type == 'audio' %}
+                    <audio src="{{ element.href }}" controls="controls"></audio>
+                {% elseif mime_type == 'video' %}
+                    <video src="{{ element.href }}" controls="controls" type="{{ element.type }};"></video>
+                {% elseif element|render_relation_element(field_description) %}
+                    <a rel="{{ element.rel }}" type="{{ element.type }}" href="{{ element.href }}" {% if element.title %}title="{{ element.title }}"{% endif %}>{{ element|render_relation_element(field_description) }}</a>
+                {% endif %}
+                <dl class="dl-horizontal">
+                    {% for key in ['rel', 'type', 'href', 'title', 'length', 'hreflang'] %}
+                    {% if attribute(element, key) %}
+                    <dt>{{ key }}</dt>
+                    <dd>{{ attribute(element, key) }}</dd>
+                    {% endif %}
+                    {% endfor %}
+                </dl>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

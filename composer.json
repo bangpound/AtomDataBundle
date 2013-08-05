@@ -1,0 +1,21 @@
+{
+    "name": "bangpound/atom-data-bundle",
+    "description": "Atom entities and admin controllers",
+    "license" : "MIT",
+    "authors": [
+        {
+            "name": "Benjamin Doherty",
+            "email": "bjd@bangpound.org"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Bangpound\\Atom\\DataBundle\\": ""
+        }
+    },
+    "require": {
+        "sonata-project/admin-bundle": "dev-master",
+        "jms/serializer-bundle": "dev-master"
+    },
+    "target-dir": "Bangpound/Atom/DataBundle"
+}
