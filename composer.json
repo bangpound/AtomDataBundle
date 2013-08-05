@@ -14,7 +14,7 @@
         }
     },
     "require": {
-        "sonata-project/admin-bundle": "dev-master",
+        "sonata-project/admin-bundle": "2.2.*",
         "jms/serializer-bundle": "dev-master"
     },
     "target-dir": "Bangpound/Atom/DataBundle"
