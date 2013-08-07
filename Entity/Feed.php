@@ -2,14 +2,16 @@
 
 namespace Bangpound\Atom\DataBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
-use Doctrine\Common\Collections\ArrayCollection;
+use Rshief\PubsubBundle\Entity\FeedTopic;
+use Rshief\PubsubBundle\Entity\FeedTopicInterface;
 
 /**
  * Feed
  *
- * @ORM\Table(name="atom_feed")
+ * @ORM\Table(name="feed")
  * @ORM\Entity(repositoryClass="Bangpound\Atom\DataBundle\Entity\FeedRepository")
  * @JMS\XmlRoot("feed")
  */
@@ -25,16 +27,9 @@ class Feed extends Source
     private $id;
 
     /**
-     * @var FeedTopic
-     *
-     * @ORM\OneToOne(targetEntity="FeedTopic", mappedBy="feed")
-     */
-    private $feedTopic;
-
-    /**
      * @var Entry
      *
-     * @ORM\OneToMany(targetEntity="Entry", mappedBy="feed", cascade={"persist", "merge"})
+     * @ORM\ManyToMany(targetEntity="Entry", mappedBy="feeds", cascade={"persist", "merge"})
      * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Entry>")
      * @JMS\XmlList(entry="entry")
      * @JMS\Exclude
@@ -60,29 +55,6 @@ class Feed extends Source
         return $this->id;
     }
 
-    /**
-     * Set feed topic
-     *
-     * @param FeedTopicInterface $topic
-     * @return Feed
-     */
-    public function setFeedTopic(FeedTopicInterface $feedTopic)
-    {
-        $feedTopic->setFeed($this);
-        $this->feedTopic = $feedTopic;
-        return $this;
-    }
-
-    /**
-     * Get feed topic
-     *
-     * @return FeedTopic
-     */
-    public function getFeedTopic()
-    {
-        return $this->feedTopic;
-    }
-
     public function __toString()
     {
         return $this->getTitle();
@@ -105,7 +77,9 @@ class Feed extends Source
 
     public function addEntry(Entry $entry)
     {
-        $entry->setFeed($this);
+        if ($entry->getFeeds() && !$entry->getFeeds()->contains($this)) {
+            $entry->addFeed($this);
+        }
         $this->entries[] = $entry;
     }
 }

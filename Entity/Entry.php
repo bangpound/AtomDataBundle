@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Entry
  *
- * @ORM\Table(name="atom_entry")
+ * @ORM\Table(name="entry")
  * @ORM\Entity(repositoryClass="Bangpound\Atom\DataBundle\Entity\FeedRepository")
  * @JMS\XMLRoot("entry")
  */
@@ -32,7 +32,7 @@ class Entry
      * @ORM\Column(name="atom_id", type="string")
      * @JMS\SerializedName("id")
      */
-    private $atom_id;
+    private $atomId;
 
     /**
      * @var \DateTime
@@ -93,12 +93,12 @@ class Entry
     private $summary_type;
 
     /**
-     * @var Feed
+     * @var ArrayCollection
      *
-     * @ORM\ManyToOne(targetEntity="Feed", inversedBy="entries")
-     * @JMS\Type("Bangpound\Atom\DataBundle\Entity\Feed")
+     * @ORM\ManyToMany(targetEntity="Feed", inversedBy="entries")
+     * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Feed>")
      */
-    private $feed;
+    private $feeds;
 
     /**
      * @var Source
@@ -113,10 +113,6 @@ class Entry
      * @var Link
      *
      * @ORM\ManyToMany(targetEntity="Link", cascade={"persist", "merge"})
-     * @ORM\JoinTable(name="atom_entry_link",
-     *     joinColumns={@ORM\JoinColumn(name="entry_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="link_id", referencedColumnName="id")}
-     * )
      * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Link>")
      * @JMS\XmlList(entry="link")
      */
@@ -126,10 +122,7 @@ class Entry
      * @var Person
      *
      * @ORM\ManyToMany(targetEntity="Person", cascade={"persist", "merge"})
-     * @ORM\JoinTable(name="atom_entry_author",
-     *     joinColumns={@ORM\JoinColumn(name="entry_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
-     * )
+     * @ORM\JoinTable(name="entry_author")
      * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Person>")
      * @JMS\XmlList(entry="author")
      */
@@ -139,10 +132,7 @@ class Entry
      * @var Person
      *
      * @ORM\ManyToMany(targetEntity="Person", cascade={"persist", "merge"})
-     * @ORM\JoinTable(name="atom_entry_contributor",
-     *     joinColumns={@ORM\JoinColumn(name="entry_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
-     * )
+     * @ORM\JoinTable(name="entry_contributor")
      * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Person>")
      * @JMS\XmlList(entry="contributor")
      */
@@ -152,10 +142,6 @@ class Entry
      * @var Category
      *
      * @ORM\ManyToMany(targetEntity="Category", cascade={"persist", "merge"})
-     * @ORM\JoinTable(name="atom_entry_category",
-     *     joinColumns={@ORM\JoinColumn(name="entry_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
-     * )
      * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Category>")
      * @JMS\XmlList(entry="category")
      */
@@ -167,6 +153,7 @@ class Entry
         $this->links = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->contributors = new ArrayCollection();
+        $this->feeds = new ArrayCollection();
     }
 
     /**
@@ -219,12 +206,6 @@ class Entry
         return $this->summary_type;
     }
 
-    public function setFeed(Feed $feed)
-    {
-        $this->feed = $feed;
-        return $this;
-    }
-
     public function __toString()
     {
         return $this->getTitle();
@@ -252,8 +233,11 @@ class Entry
         return $this;
     }
 
-    public function getFeed()
-    {
-        return $this->feed;
+    public function getFeeds() {
+        return $this->feeds;
+    }
+
+    public function addFeed(Feed $feed) {
+        $this->feeds[] = $feed;
     }
 }

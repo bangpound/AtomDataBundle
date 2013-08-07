@@ -5,14 +5,16 @@ namespace Bangpound\Atom\DataBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\Discriminator;
 
 /**
  * Source
  *
- * @ORM\Table(name="atom_source")
+ * @ORM\Table(name="source")
  * @ORM\InheritanceType("JOINED")
  * @ORM\Entity(repositoryClass="Bangpound\Atom\DataBundle\Entity\FeedRepository")
  * @JMS\XmlRoot("source")
+ * @JMS\Discriminator(disabled=true)
  */
 class Source
 {
@@ -31,10 +33,7 @@ class Source
      * @var Author
      *
      * @ORM\ManyToMany(targetEntity="Person", cascade={"persist", "merge"})
-     * @ORM\JoinTable(name="atom_source_author",
-     *     joinColumns={@ORM\JoinColumn(name="source_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
-     * )
+     * @ORM\JoinTable(name="source_author")
      * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Person>")
      * @JMS\XmlList(entry="author")
      */
@@ -44,10 +43,6 @@ class Source
      * @var Category
      *
      * @ORM\ManyToMany(targetEntity="Category", cascade={"persist", "merge"})
-     * @ORM\JoinTable(name="atom_source_category",
-     *     joinColumns={@ORM\JoinColumn(name="source_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
-     * )
      * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Category>")
      * @JMS\XmlList(entry="category")
      */
@@ -57,10 +52,7 @@ class Source
      * @var Contributor
      *
      * @ORM\ManyToMany(targetEntity="Person", cascade={"persist", "merge"})
-     * @ORM\JoinTable(name="atom_source_contributor",
-     *     joinColumns={@ORM\JoinColumn(name="source_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
-     * )
+     * @ORM\JoinTable(name="source_contributor")
      * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Person>")
      * @JMS\XmlList(entry="contributor")
      */
@@ -88,16 +80,12 @@ class Source
      * @ORM\Column(name="atom_id", type="string")
      * @JMS\SerializedName("id")
      */
-    private $atom_id;
+    private $atomId;
 
     /**
      * @var Link
      *
      * @ORM\ManyToMany(targetEntity="Link", cascade={"persist", "merge"})
-     * @ORM\JoinTable(name="atom_source_link",
-     *     joinColumns={@ORM\JoinColumn(name="source_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="link_id", referencedColumnName="id")}
-     * )
      * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Link>")
      * @JMS\XmlList(entry="link")
      */
@@ -142,12 +130,19 @@ class Source
     }
 
     public function setEntry(Entry $entry) {
-        ld($entry);
         $entry->setSource($this);
         return $this;
     }
 
     public function __toString() {
         return $this->getTitle();
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+    public function setId($id) {
+        $this->id  = $id;
+        return $this;
     }
 }

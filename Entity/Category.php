@@ -8,7 +8,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * Category
  *
- * @ORM\Table("atom_category")
+ * @ORM\Table("category")
  * @ORM\Entity
  */
 class Category

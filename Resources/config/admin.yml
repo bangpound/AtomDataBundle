@@ -1,0 +1,26 @@
+services:
+    bangpound.atom.data.feed:
+        class: Bangpound\Atom\DataBundle\Admin\FeedAdmin
+        arguments: [ ~ , '%bangpound_atom_data.model.feed.class%', 'SonataAdminBundle:CRUD' ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Feeds, label: Feed }
+        calls:
+            - [ setTranslationDomain, [ 'BangpoundAtomDataBundle' ] ]
+            - [ addChild, [ '@bangpound.atom.data.entry' ] ]
+
+    bangpound.atom.data.source:
+        class: Bangpound\Atom\DataBundle\Admin\SourceAdmin
+        arguments: [ ~ , '%bangpound_atom_data.model.source.class%', 'SonataAdminBundle:CRUD' ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Feeds, label: Source }
+        calls:
+            - [ setTranslationDomain, [ 'BangpoundAtomDataBundle' ] ]
+
+    bangpound.atom.data.entry:
+        class: Bangpound\Atom\DataBundle\Admin\EntryAdmin
+        arguments: [ ~ , '%bangpound_atom_data.model.entry.class%', 'SonataAdminBundle:CRUD' ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Feeds, label: Entry }
+        calls:
+            - [ setTranslationDomain, [ 'BangpoundAtomDataBundle' ] ]
+            - [ setParentAssociationMapping, [ 'feed' ] ]

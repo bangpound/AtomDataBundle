@@ -8,7 +8,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * Link
  *
- * @ORM\Table("atom_link")
+ * @ORM\Table("link")
  * @ORM\Entity(repositoryClass="Bangpound\Atom\DataBundle\Entity\FeedRepository")
  * @JMS\XMLRoot("link")
  */

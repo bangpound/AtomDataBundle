@@ -8,12 +8,12 @@ trait CommonMetadata
 {
     public function getAtomId()
     {
-        return $this->atom_id;
+        return $this->atomId;
     }
 
-    public function setAtomId($atom_id)
+    public function setAtomId($atomId)
     {
-        $this->atom_id = $atom_id;
+        $this->atomId = $atomId;
         return $this;
     }
 

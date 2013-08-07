@@ -8,7 +8,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * Person
  *
- * @ORM\Table("atom_person")
+ * @ORM\Table("person")
  * @ORM\Entity(repositoryClass="Bangpound\Atom\DataBundle\Entity\FeedRepository")
  */
 class Person
@@ -29,7 +29,7 @@ class Person
      * @ORM\Column(name="atom_id", type="string")
      * @JMS\SerializedName("id")
      */
-    private $atom_id;
+    private $atomId;
 
     /**
      * @var string

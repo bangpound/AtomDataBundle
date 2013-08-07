@@ -14,7 +14,8 @@ class FeedRepository extends EntityRepository
 {
     public function findByAtomId($id, array $orderBy = null, $limit = null, $offset = null)
     {
-        $criteria = array('atom_id' => $id);
-        return $this->findOneBy($criteria, $orderBy, $limit, $offset);
+        $criteria = array('atomId' => $id);
+        $entity = $this->findOneBy($criteria, $orderBy, $limit, $offset);
+        return $entity;
     }
 }

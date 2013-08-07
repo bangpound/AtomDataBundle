@@ -13,11 +13,6 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 class FeedAdmin extends Admin
 {
-    public function setParentAssociationMapping($associationMapping)
-    {
-        $this->parentAssociationMapping = $associationMapping;
-    }
-
     protected function configureSideMenu(ItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
         if (!$childAdmin && !in_array($action, array('edit', 'show'))) { return; }
@@ -45,7 +40,6 @@ class FeedAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('title', null, array('route' => array('name' => 'show')))
-            ->add('feedTopic.topic.topicUrl')
             ->add('atomId')
             ->add('updated', 'datetime')
         ;

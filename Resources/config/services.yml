@@ -1,10 +1,14 @@
 parameters:
 #    bangpound_atom_data.example.class: Bangpound\Atom\DataBundle\Example
+    bangpound_atom_data.model.feed.class: Bangpound\Atom\DataBundle\Entity\Feed
+    bangpound_atom_data.model.entry.class: Bangpound\Atom\DataBundle\Entity\Entry
+    bangpound_atom_data.model.source.class: Bangpound\Atom\DataBundle\Entity\Source
     bangpound_atom_data.feed_deserializer.class: Bangpound\Atom\DataBundle\EventListener\FeedDeserialize
     bangpound_atom_data.atom_merger.class: Bangpound\Atom\DataBundle\EventDispatcher\Subscriber\MergeEntitySubscriber
     bangpound_atom_data.deserialize_http.class: Bangpound\Atom\DataBundle\EventDispatcher\Subscriber\DeserializeHttpStatus
     bangpound_atom_data.deserialize_text_constructs.class: Bangpound\Atom\DataBundle\EventDispatcher\Subscriber\DeserializeAtomTextConstructs
     bangpound_atom_data.deserialize_nil_dates.class: Bangpound\Atom\DataBundle\EventDispatcher\Subscriber\DeserializeNilDates
+    bangpound_atom_data.db.table_prefix: atom_data__
 
 services:
 #    bangpound_atom_data.atom_merger:
@@ -28,3 +32,9 @@ services:
         class: %bangpound_atom_data.deserialize_nil_dates.class%
         tags:
             - { name: jms_serializer.event_subscriber }
+
+    bangpound_atom_data.tblprefix_subscriber:
+        class: Bangpound\Atom\DataBundle\Subscriber\TablePrefixSubscriber
+        arguments: [%bangpound_atom_data.db.table_prefix%]
+        tags:
+            - { name: doctrine.event_subscriber }

@@ -43,6 +43,7 @@ class EntryAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('title', null, array('route' => array('name' => 'show')))
+            ->add('source')
             ->add('published')
             ->add('updated')
         ;
