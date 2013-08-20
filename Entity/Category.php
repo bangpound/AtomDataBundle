@@ -38,7 +38,7 @@ class Category
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -54,14 +54,14 @@ class Category
     public function setTerm($term)
     {
         $this->term = $term;
-    
+
         return $this;
     }
 
     /**
      * Get term
      *
-     * @return string 
+     * @return string
      */
     public function getTerm()
     {
@@ -77,14 +77,14 @@ class Category
     public function setScheme($scheme)
     {
         $this->scheme = $scheme;
-    
+
         return $this;
     }
 
     /**
      * Get scheme
      *
-     * @return string 
+     * @return string
      */
     public function getScheme()
     {

@@ -67,7 +67,7 @@ class Link
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -83,14 +83,14 @@ class Link
     public function setTitle($title)
     {
         $this->title = $title;
-    
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -106,14 +106,14 @@ class Link
     public function setRel($rel)
     {
         $this->rel = $rel;
-    
+
         return $this;
     }
 
     /**
      * Get rel
      *
-     * @return string 
+     * @return string
      */
     public function getRel()
     {
@@ -129,14 +129,14 @@ class Link
     public function setHref($href)
     {
         $this->href = $href;
-    
+
         return $this;
     }
 
     /**
      * Get href
      *
-     * @return string 
+     * @return string
      */
     public function getHref()
     {
@@ -152,14 +152,14 @@ class Link
     public function setType($type)
     {
         $this->type = $type;
-    
+
         return $this;
     }
 
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
