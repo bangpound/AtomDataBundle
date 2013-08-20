@@ -1,6 +1,6 @@
 <?php
 
-namespace Bangpound\Atom\DataBundle\Entity;
+namespace Bangpound\Atom\DataBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
