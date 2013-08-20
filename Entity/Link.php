@@ -2,31 +2,23 @@
 
 namespace Bangpound\Atom\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * Link
  *
- * @ORM\Table("link")
- * @ORM\Entity(repositoryClass="Bangpound\Atom\DataBundle\Entity\FeedRepository")
  * @JMS\XMLRoot("link")
  */
 class Link
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      * @JMS\Type("string")
      * @JMS\XmlAttribute
      */
@@ -35,7 +27,6 @@ class Link
     /**
      * @var string
      *
-     * @ORM\Column(name="rel", type="string", length=255)
      * @JMS\Type("string")
      * @JMS\XmlAttribute
      */
@@ -44,7 +35,6 @@ class Link
     /**
      * @var string
      *
-     * @ORM\Column(name="href", type="string", length=255)
      * @JMS\Type("string")
      * @JMS\XmlAttribute
      */
@@ -53,7 +43,6 @@ class Link
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255, nullable=true)
      * @JMS\Type("string")
      * @JMS\XmlAttribute
      */
@@ -62,7 +51,6 @@ class Link
     /**
      * @var string
      *
-     * @ORM\Column(name="hreflang", type="string", length=255, nullable=true)
      * @JMS\Type("string")
      * @JMS\XmlAttribute
      */
@@ -71,7 +59,6 @@ class Link
     /**
      * @var string
      *
-     * @ORM\Column(name="length", type="string", length=255, nullable=true)
      * @JMS\Type("string")
      * @JMS\XmlAttribute
      */

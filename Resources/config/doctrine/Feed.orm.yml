@@ -1,0 +1,15 @@
+Bangpound\Atom\DataBundle\Entity\Feed:
+    type: entity
+    table: feed
+    repositoryClass: Bangpound\Atom\DataBundle\Entity\FeedRepository
+    manyToMany:
+        entries:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Entry
+            cascade:
+                - persist
+                - merge
+            mappedBy: feeds
+            inversedBy: null
+            joinTable: {  }
+            orderBy: null
+    lifecycleCallbacks: {  }

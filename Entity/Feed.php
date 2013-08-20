@@ -3,7 +3,6 @@
 namespace Bangpound\Atom\DataBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Rshief\PubsubBundle\Entity\FeedTopic;
 use Rshief\PubsubBundle\Entity\FeedTopicInterface;
@@ -11,25 +10,18 @@ use Rshief\PubsubBundle\Entity\FeedTopicInterface;
 /**
  * Feed
  *
- * @ORM\Table(name="feed")
- * @ORM\Entity(repositoryClass="Bangpound\Atom\DataBundle\Entity\FeedRepository")
  * @JMS\XmlRoot("feed")
  */
 class Feed extends Source
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var Entry
      *
-     * @ORM\ManyToMany(targetEntity="Entry", mappedBy="feeds", cascade={"persist", "merge"})
      * @JMS\Type("ArrayCollection<Bangpound\Atom\DataBundle\Entity\Entry>")
      * @JMS\XmlList(entry="entry")
      * @JMS\Exclude

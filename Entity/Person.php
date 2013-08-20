@@ -2,23 +2,15 @@
 
 namespace Bangpound\Atom\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * Person
- *
- * @ORM\Table("person")
- * @ORM\Entity(repositoryClass="Bangpound\Atom\DataBundle\Entity\FeedRepository")
  */
 class Person
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -26,29 +18,22 @@ class Person
      *
      * @var string
      *
-     * @ORM\Column(name="atom_id", type="string")
      * @JMS\SerializedName("id")
      */
     private $atomId;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="uri", type="string", length=255, nullable=true)
      */
     private $uri;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
     private $email;
 

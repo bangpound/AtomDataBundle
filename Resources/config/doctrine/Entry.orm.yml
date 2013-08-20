@@ -1,0 +1,193 @@
+Bangpound\Atom\DataBundle\Entity\Entry:
+    type: entity
+    table: entry
+    repositoryClass: Bangpound\Atom\DataBundle\Entity\FeedRepository
+    fields:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+        atomId:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: atom_id
+        published:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        updated:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        title:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: false
+            precision: 0
+        title_type:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        rights:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        rights_type:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        summary:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        summary_type:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+    manyToMany:
+        feeds:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Feed
+            cascade: {  }
+            mappedBy: null
+            inversedBy: entries
+            joinTable:
+                name: entry_feed
+                joinColumns:
+                    -
+                        name: entry_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: feed_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        links:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Link
+            cascade:
+                - persist
+                - merge
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: entry_link
+                joinColumns:
+                    -
+                        name: entry_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: link_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        authors:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Person
+            cascade:
+                - persist
+                - merge
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: entry_author
+                schema: null
+                joinColumns:
+                    -
+                        name: entry_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: person_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        contributors:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Person
+            cascade:
+                - persist
+                - merge
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: entry_contributor
+                schema: null
+                joinColumns:
+                    -
+                        name: entry_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: person_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        categories:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Category
+            cascade:
+                - persist
+                - merge
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: entry_category
+                joinColumns:
+                    -
+                        name: entry_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: category_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+    manyToOne:
+        source:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Source
+            cascade:
+                - persist
+                - merge
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                source_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

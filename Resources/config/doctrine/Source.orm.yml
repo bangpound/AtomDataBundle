@@ -1,0 +1,158 @@
+Bangpound\Atom\DataBundle\Entity\Source:
+    type: entity
+    table: source
+    inheritanceType: JOINED
+    discriminatorColumn:
+        name: dtype
+        type: string
+        length: 255
+        fieldName: dtype
+    discriminatorMap:
+        source: Bangpound\Atom\DataBundle\Entity\Source
+        feed: Bangpound\Atom\DataBundle\Entity\Feed
+    repositoryClass: Bangpound\Atom\DataBundle\Entity\FeedRepository
+    fields:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+        generator:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        icon:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        atomId:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: atom_id
+        rights:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        subtitle:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        title:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        updated:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    manyToMany:
+        authors:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Person
+            cascade:
+                - persist
+                - merge
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: source_author
+                schema: null
+                joinColumns:
+                    -
+                        name: source_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: person_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        categories:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Category
+            cascade:
+                - persist
+                - merge
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: source_category
+                joinColumns:
+                    -
+                        name: source_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: category_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        contributors:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Person
+            cascade:
+                - persist
+                - merge
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: source_contributor
+                schema: null
+                joinColumns:
+                    -
+                        name: source_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: person_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+        links:
+            targetEntity: Bangpound\Atom\DataBundle\Entity\Link
+            cascade:
+                - persist
+                - merge
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: source_link
+                joinColumns:
+                    -
+                        name: source_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: link_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+    lifecycleCallbacks: {  }

@@ -2,30 +2,21 @@
 
 namespace Bangpound\Atom\DataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * Category
- *
- * @ORM\Table("category")
- * @ORM\Entity
  */
 class Category
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="term", type="string", length=255)
      * @JMS\XmlAttribute
      */
     private $term;
@@ -33,7 +24,6 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="scheme", type="string", length=255, nullable=true)
      * @JMS\XmlAttribute
      */
     private $scheme;
@@ -41,7 +31,6 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="label", type="string", length=255, nullable=true)
      * @JMS\XmlAttribute
      */
     private $label;
