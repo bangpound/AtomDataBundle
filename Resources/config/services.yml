@@ -1,5 +1,4 @@
 parameters:
-#    bangpound_atom_data.example.class: Bangpound\Atom\DataBundle\Example
     bangpound_atom_data.model.feed.class: Bangpound\Atom\DataBundle\Entity\Feed
     bangpound_atom_data.model.entry.class: Bangpound\Atom\DataBundle\Entity\Entry
     bangpound_atom_data.model.source.class: Bangpound\Atom\DataBundle\Entity\Source
@@ -11,13 +10,6 @@ parameters:
     bangpound_atom_data.db.table_prefix: atom_data__
 
 services:
-#    bangpound_atom_data.atom_merger:
-#        class: %bangpound_atom_data.atom_merger.class%
-#        arguments:
-#            - '@doctrine.orm.entity_manager'
-#        tags:
-#            - { name: jms_serializer.event_subscriber }
-
     bangpound_atom_data.deserialize_http:
         class: %bangpound_atom_data.deserialize_http.class%
         tags:

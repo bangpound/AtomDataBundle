@@ -20,9 +20,23 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('bangpound_atom_data');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $supportedDrivers = array('orm', 'couchdb', 'custom');
+
+        $rootNode
+            ->children()
+                ->scalarNode('db_driver')
+                    ->validate()
+                        ->ifNotInArray($supportedDrivers)
+                        ->thenInvalid('The driver %s is not supported. Please choose one of '.json_encode($supportedDrivers))
+                    ->end()
+                    ->cannotBeOverwritten()
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('entry_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('model_manager_name')->defaultNull()->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
