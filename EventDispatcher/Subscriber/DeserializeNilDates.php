@@ -1,28 +1,33 @@
 <?php
 
-/*
- * Copyright 2013 Johannes M. Schmitt <schmittjoh@gmail.com>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 namespace Bangpound\Atom\DataBundle\EventDispatcher\Subscriber;
-
+use JMS\Serializer\Exception\RuntimeException;
+use JMS\Serializer\Handler\DateHandler;
 use JMS\Serializer\EventDispatcher\Event;
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
+use JMS\Serializer\EventDispatcher\PreDeserializeEvent;
+use JMS\Serializer\VisitorInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 
+/**
+ * Class DeserializeNilDates
+ * @package Bangpound\Atom\DataBundle\EventDispatcher\Subscriber
+ */
 class DeserializeNilDates implements EventSubscriberInterface
 {
+    private $handler;
+
+    /**
+     * @param DateHandler $handler
+     */
+    public function __construct(DateHandler $handler)
+    {
+        $this->handler = $handler;
+    }
+
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -30,16 +35,32 @@ class DeserializeNilDates implements EventSubscriberInterface
         );
     }
 
-    public function onPreDeserialize(Event $event)
+    /**
+     * Bad dates cause fatal errors, and this is the best remedy I've found so far.
+     * The date time handler is brought in so that I can trap the exception that
+     * happens when feeds have dates like NaN/NaN/NaN NaN:NaN:NaN.
+     *
+     * @param PreDeserializeEvent $event
+     */
+    public function onPreDeserialize(PreDeserializeEvent $event)
     {
         $type = $event->getType();
-        if ($type['name'] == 'Bangpound\Atom\DataBundle\Entity\Entry') {
+        if ($type['name'] == 'DateTime') {
+            /** @var VisitorInterface $visitor */
+            $visitor = $event->getVisitor();
+
+            /** @var \SimpleXMLElement $data */
             $data = $event->getData();
-            if (empty($data->published)) {
-                $data->published->addAttribute('nil', 'true');
-            }
-            if (empty($data->updated)) {
-                $data->updated->addAttribute('nil', 'true');
+
+
+            try {
+                $this->handler->deserializeDateTimeFromXml($visitor, $data, $type);
+            } catch (RuntimeException $e) {
+                $attributes = $data->attributes('xsi', true);
+                if (!isset($attributes['nil'][0]) || (string) $attributes['nil'][0] ==! 'true') {
+                    $data->addAttribute('xsi:nil', 'true', 'http://www.w3.org/2001/XMLSchema-instance');
+                }
+                $event->setData($data);
             }
         }
     }
