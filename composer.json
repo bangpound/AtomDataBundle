@@ -9,13 +9,12 @@
         }
     ],
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Bangpound\\Atom\\DataBundle\\": ""
         }
     },
     "require": {
         "sonata-project/admin-bundle": "~2.2",
         "jms/serializer-bundle": "dev-master"
-    },
-    "target-dir": "Bangpound/Atom/DataBundle"
+    }
 }
