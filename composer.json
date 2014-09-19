@@ -16,5 +16,10 @@
     "require": {
         "sonata-project/admin-bundle": "~2.2",
         "jms/serializer-bundle": "0.13.*@dev"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
