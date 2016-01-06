@@ -14,7 +14,7 @@
         }
     },
     "require": {
-        "jms/serializer-bundle": "0.13.*@dev"
+        "jms/serializer-bundle": "~1.1"
     },
     "extra": {
         "branch-alias": {
